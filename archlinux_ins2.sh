@@ -13,8 +13,7 @@ other_configs()
     # creat group and user (wbr)
     groupadd wbr
     useradd -m -g wbr -G wheel -s /usr/bin/zsh wbr
-    pswd_wbr=$(date +%s | sha256sum | base64 | head -c 10 ; echo)
-    echo "wbr:$pswd_wbr" > /home/passwd_of_wbr | chpasswd
+    echo "wbr:dlp" > /home/passwd_of_wbr | chpasswd
 
     # change to zsh and config
     #chsh -s /usr/bin/zsh

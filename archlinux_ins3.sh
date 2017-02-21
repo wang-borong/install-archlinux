@@ -19,7 +19,8 @@ ins virtualbox-guest-utils
 ins firefox
 ins fcitx-im fcitx-configtool fcitx-googlepinyin
 
-echo '[archlinuxfr]
+echo '
+[archlinuxfr]
 SigLevel = Optional TrustAll
 Server = http://repo.archlinux.fr/$arch
 ' >> /etc/pacman.conf
