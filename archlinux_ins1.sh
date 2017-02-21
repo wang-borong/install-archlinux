@@ -97,13 +97,12 @@ Y|y)
     ;;
 n|N)
     echo ""
-    echo "didn't create other file systems"
     ;;
 esac
 
 echo ""
 
-read -p "the rest of arch_vg00 are created for lv_home? [Yy|Nn]: " ans
+read -p "The rest of arch_vg00 are created for lv_home? [Yy|Nn]: " ans
 case $ans in
 Y|y)
     lvcreate -l 100%FREE -n lv_home arch_vg00
@@ -111,7 +110,12 @@ Y|y)
     ;;
 n|N)
     echo ""
-    echo "didn't create /home"
+    echo "Warning: didn't create home"
+    exit
+    ;;
+*)
+    lvcreate -l 100%FREE -n lv_home arch_vg00
+    mkfs.ext4 /dev/arch_vg00/lv_home
     ;;
 esac
 
