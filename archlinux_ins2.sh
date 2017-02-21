@@ -31,6 +31,13 @@ other_configs()
 mv /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bak
 echo "Server = http://mirrors.zju.edu.cn/archlinux/\$repo/os/\$arch" > /etc/pacman.d/mirrorlist
 
+# for install yaourt
+echo '
+[archlinuxfr]
+SigLevel = Optional TrustAll
+Server = http://repo.archlinux.fr/$arch
+' >> /etc/pacman.conf
+
 echo $1 >> /etc/hostname
 ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 
