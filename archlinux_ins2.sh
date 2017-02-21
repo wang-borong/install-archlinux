@@ -13,7 +13,8 @@ other_configs()
     # creat group and user (wbr)
     groupadd wbr
     useradd -m -g wbr -G wheel -s /usr/bin/zsh wbr
-    echo "wbr:dlp" > /home/passwd_of_wbr | chpasswd
+    echo "wbr:dlp" | chpasswd
+    echo "wbr:dlp" > /home/passwd_of_wbr
 
     # change to zsh and config
     #chsh -s /usr/bin/zsh
@@ -51,35 +52,13 @@ grub-install --target=i386-pc --recheck --debug /dev/sda
 grub-mkconfig -o /boot/grub/grub.cfg
 
 
-# for install yaourt
-echo '
-[archlinuxfr]
-SigLevel = Optional TrustAll
-Server = http://repo.archlinux.fr/$arch
-' >> /etc/pacman.conf && pacman -Sy
-
-
 # set passwd for root
 pswd=$(date +%s | sha256sum | base64 | head -c 10 ; echo)
-echo "root:$pswd" > /home/passwd_of_root | chpasswd
-
+echo "root:$pswd" | chpasswd
+echo "root:$pswd" > /home/passwd_of_root
 
 # do other configs
 other_configs
-
-
-# archlinux_ins3.sh
-read -p "Do you want to install xfce4? " xfce
-case $xfce in
-Y|y)
-    [[ -r archlinux_ins3.sh ]] &&
-        bash archlinux_ins3.sh ||
-        echo "No script to install xfce4!"
-    rm -rf archlinux_ins3.sh
-    ;;
-*)
-    ;;
-esac
 
 
 exit

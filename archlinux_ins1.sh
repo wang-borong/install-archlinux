@@ -140,7 +140,6 @@ genfstab -p /mnt >> /mnt/etc/fstab
 
 
 cp /run/archiso/bootmnt/archlinux_ins2.sh /mnt
-cp /run/archiso/bootmnt/archlinux_ins3.sh /mnt
 cp -r /run/archiso/bootmnt/configs /mnt/home
 
 # Run the second step
