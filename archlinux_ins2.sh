@@ -31,13 +31,6 @@ other_configs()
 mv /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bak
 echo "Server = http://mirrors.zju.edu.cn/archlinux/\$repo/os/\$arch" > /etc/pacman.d/mirrorlist
 
-# for install yaourt
-echo '
-[archlinuxfr]
-SigLevel = Optional TrustAll
-Server = http://repo.archlinux.fr/$arch
-' >> /etc/pacman.conf
-
 echo $1 >> /etc/hostname
 ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 
@@ -58,6 +51,14 @@ grub-install --target=i386-pc --recheck --debug /dev/sda
 grub-mkconfig -o /boot/grub/grub.cfg
 
 
+# for install yaourt
+echo '
+[archlinuxfr]
+SigLevel = Optional TrustAll
+Server = http://repo.archlinux.fr/$arch
+' >> /etc/pacman.conf && pacman -Sy
+
+
 # set passwd for root
 pswd=$(date +%s | sha256sum | base64 | head -c 10 ; echo)
 echo "root:$pswd" > /home/passwd_of_root | chpasswd
@@ -74,6 +75,7 @@ Y|y)
     [[ -r archlinux_ins3.sh ]] &&
         bash archlinux_ins3.sh ||
         echo "No script to install xfce4!"
+    rm -rf archlinux_ins3.sh
     ;;
 *)
     ;;
