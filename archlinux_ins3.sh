@@ -25,7 +25,7 @@ SigLevel = Optional TrustAll
 Server = http://repo.archlinux.fr/$arch
 ' >> /etc/pacman.conf
 
-ins yaourt
+pacman -S yaourt
 
 
 echo "exec startxfce4" > ~/.xinitrc
