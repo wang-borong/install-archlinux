@@ -86,7 +86,6 @@ swapon /dev/sda2
 pvcreate /dev/sda3
 vgcreate arch_vg00 /dev/sda3
 
-echo ""
 read -p "how many you separate for root? size{M,G}: " root
 lvcreate -L $root -n lv_root arch_vg00
 mkfs.ext4 /dev/arch_vg00/lv_root
