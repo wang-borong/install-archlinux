@@ -13,8 +13,8 @@ other_configs()
     # creat group and user (wbr)
     groupadd wbr
     useradd -m -g wbr -G wheel -s /usr/bin/zsh wbr
-    echo "wbr:dlp" | chpasswd
-    echo "dlp" > /home/wbr/passwd_of_wbr
+    pswd_wbr=$(date +%s | sha256sum | base64 | head -c 10 ; echo)
+    echo "wbr:$pswd_wbr" > /home/passwd_of_wbr | chpasswd
 
     # change to zsh and config
     #chsh -s /usr/bin/zsh
@@ -54,7 +54,7 @@ grub-mkconfig -o /boot/grub/grub.cfg
 
 # set passwd for root
 pswd=$(date +%s | sha256sum | base64 | head -c 10 ; echo)
-echo "root:$pswd" > ~/passwd_of_root | chpasswd
+echo "root:$pswd" > /home/passwd_of_root | chpasswd
 
 
 # do other configs
