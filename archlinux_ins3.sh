@@ -32,5 +32,7 @@ echo "exec startxfce4" > ~/.xinitrc
 
 (su wbr && echo "exec startxfce4" > /home/wbr/.xinitrc)
 
+systemctl start slim
+systemctl enable slim
 
 exit
