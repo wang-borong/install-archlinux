@@ -95,12 +95,9 @@ case $yesno in
 Y|y)
     mkfilesys
     ;;
-n|N)
-    echo ""
+*)
     ;;
 esac
-
-echo ""
 
 read -p "The rest of arch_vg00 are created for lv_home? [Yy|Nn]: " ans
 case $ans in
@@ -143,7 +140,6 @@ genfstab -p /mnt >> /mnt/etc/fstab
 
 
 cp /run/archiso/bootmnt/archlinux_ins2.sh /mnt
-cp /run/archiso/bootmnt/archlinux_ins3.sh /mnt
 cp -r /run/archiso/bootmnt/configs /mnt/home
 
 # Run the second step
