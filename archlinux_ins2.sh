@@ -8,7 +8,7 @@ other_configs()
     systemctl enable dhcpcd && systemctl start dhcpcd
 
     # install apps
-    pacman -S zsh wget git gvim gcc << EOF
+    pacman -S zsh wget git gvim << EOF
 
 y
 EOF
