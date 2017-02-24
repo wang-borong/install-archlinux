@@ -28,8 +28,8 @@ EOF
 EOF
     echo "y" | pacman -S ttf-dejavu wqy-zenhei wqy-microhei
 
-    read -p "If use virtualbox, please touch Enter! " vbox
-    [[ "$vbox" == "" ]] && pacman -S virtualbox-guest-utils << EOF
+    read -p "If use virtualbox, please input y! " vbox
+    [[ "$vbox" == "y" ]] && pacman -S virtualbox-guest-utils << EOF
 
 
 EOF
@@ -40,8 +40,7 @@ SigLevel = Optional TrustAll
 Server = http://repo.archlinux.fr/$arch
 ' >> /etc/pacman.conf
 
-    pacman -Sy
-    echo "y" | pacman -S yaourt
+    echo "y" | pacman -Sy yaourt
 
     echo "exec startxfce4" > /home/wbr/.xinitrc
     chown wbr:wbr /home/wbr/.xinitrc
