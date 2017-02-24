@@ -198,7 +198,11 @@ genfstab -U /mnt >> /mnt/etc/fstab
     cp -r /run/archiso/bootmnt/configs /mnt/home
 
 # Run the second step
+<<<<<<< HEAD
 arch-chroot /mnt /bin/bash archlinux_ins2.sh $chty $hnm
+=======
+arch-chroot /mnt /bin/bash archlinux_ins2.sh $hnm $chty
+>>>>>>> hotfix/v0.1.1
 
 
 # get log
