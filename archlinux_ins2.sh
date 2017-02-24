@@ -58,6 +58,18 @@ else
 fi
 grub-mkconfig -o /boot/grub/grub.cfg
 
+# for virtualbox efi
+read -p "If you use virtualbox, please input y: " vbefi
+case $vbefi in
+    Y|y)
+        if [[ "$2" == "efi" ]]; then
+            cd /boot/EFI && cp -r grub BOOT
+            cd BOOT && mv grubx64.efi BOOTX64.EFI
+        fi
+        ;;
+    *)
+        ;;
+esac
 
 # set passwd for root
 echo "root:dlp" | chpasswd
