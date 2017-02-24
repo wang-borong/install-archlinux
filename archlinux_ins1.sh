@@ -71,6 +71,7 @@ n
 
 
 8e00
+p
 w
 y
 EOF
@@ -103,8 +104,8 @@ echo "Server = http://mirrors.zju.edu.cn/archlinux/\$repo/os/\$arch" > /etc/pacm
 
 # Start to install!
 echo "start to install archlinux"
-# wait 2 seconds
-sleep 2
+# wait 1 seconds
+sleep 1
 read -p "which type you need to install? mbr or efi? " chty
 read -p "input hostname: " hnm
 
@@ -151,7 +152,7 @@ Y|y)
     mkfs.ext4 /dev/arch_vg00/lv_home
     ;;
 n|N)
-    read -p "how many you separate for root? size{M,G}: " home
+    read -p "how many you separate for home? size{M,G}: " home
     lvcreate -L $home -n lv_home arch_vg00
     mkfs.ext4 /dev/arch_vg00/lv_home
     ;;

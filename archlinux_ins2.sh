@@ -8,7 +8,10 @@ other_configs()
     systemctl enable dhcpcd && systemctl start dhcpcd
 
     # install apps
-    echo "y" | pacman -S zsh wget git vim gcc
+    pacman -S zsh wget git gvim << EOF
+
+y
+EOF
 
     # creat group and user (wbr)
     groupadd wbr
@@ -32,7 +35,7 @@ other_configs()
 mv /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bak
 echo "Server = http://mirrors.zju.edu.cn/archlinux/\$repo/os/\$arch" > /etc/pacman.d/mirrorlist
 
-echo $1 >> /etc/hostname
+echo $1 > /etc/hostname
 ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 
 sed -i "s/\#en_US\.UTF\-8/en_US\.UTF\-8/" /etc/locale.gen
@@ -43,19 +46,34 @@ echo "export LANG=en_US.UTF-8" >> /etc/locale.conf
 
 sed -i "s/ block filesystems / block lvm2 filesystems /" /etc/mkinitcpio.conf
 
-
 mkinitcpio -p linux
 
-echo "y" | pacman -S grub
 
-grub-install --target=i386-pc --recheck --debug /dev/sda
+if [[ "$2" == "efi" ]]; then
+    echo "y" | pacman -S grub-efi-x86_64 efibootmgr
+    grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=grub
+else
+    echo "y" | pacman -S grub
+    grub-install --target=i386-pc --recheck --debug /dev/sda
+fi
 grub-mkconfig -o /boot/grub/grub.cfg
 
+# for virtualbox efi
+read -p "If you use virtualbox, please input y: " vbefi
+case $vbefi in
+    Y|y)
+        if [[ "$2" == "efi" ]]; then
+            cd /boot/EFI && cp -r grub BOOT
+            cd BOOT && mv grubx64.efi BOOTX64.EFI
+        fi
+        ;;
+    *)
+        ;;
+esac
 
 # set passwd for root
-pswd=$(date +%s | sha256sum | base64 | head -c 10 ; echo)
-echo "root:$pswd" | chpasswd
-echo "root:$pswd" > /home/passwd_of_root
+echo "root:dlp" | chpasswd
+echo "root:dlp" > /home/passwd_of_root
 
 # do other configs
 other_configs
