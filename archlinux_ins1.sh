@@ -2,7 +2,7 @@
 
 
 # functions
-mkpartitions()
+mkpartitions_mbr()
 {
     # $1 is boot part, $2 is swap part and the rest is lvm. all
     # partions are primary.
@@ -13,7 +13,7 @@ mkpartitions()
         pa=$1
     fi
     if [[ $2 == "" ]]; then
-        pb="512M"
+        pb="1G"
     else
         pb=$2
     fi
@@ -41,12 +41,46 @@ w
 EOF
 }
 
+mkpartitions_efi()
+{
+    if [[ $1 == "" ]]; then
+        pa="512M"
+    else
+        pa=$1
+    fi
+    if [[ $2 == "" ]]; then
+        pb="1G"
+    else
+        pb=$2
+    fi
+    gdisk /dev/sda << EOF
+o
+y
+n
+
+
++$pa
+ef00
+n
+
+
++$pb
+8200
+n
+
+
+
+8e00
+w
+y
+EOF
+}
 
 mkfilesys()
 {
     echo "when finished, input q or Q to exit."
     echo ""
-    while read -p "which file system(common usr, var, opt): " fls;
+    while read -p "which file system(common home, usr, var, opt): " fls;
     do
         case $fls in
         q|Q)
@@ -71,16 +105,27 @@ echo "Server = http://mirrors.zju.edu.cn/archlinux/\$repo/os/\$arch" > /etc/pacm
 echo "start to install archlinux"
 # wait 2 seconds
 sleep 2
+read -p "which type you need to install? mbr or efi? " chty
 read -p "input hostname: " hnm
 
 read -p "input size of boot, size{M,G}：" sz_boot
 read -p "input size of swap, size{M,G}：" sz_swap
-mkpartitions $sz_boot $sz_swap
-partprobe
+if [[ "$chty" == "efi" ]]; then
+    mkpartitions_efi $sz_boot $sz_swapi
+    partprobe
 
-mkfs.ext4 /dev/sda1
-mkswap /dev/sda2
-swapon /dev/sda2
+    mkfs.fat -F32 /dev/sda1
+    mkswap /dev/sda2
+    swapon /dev/sda2
+else
+    mkpartitions_mbr $sz_boot $sz_swap
+    partprobe
+
+    mkfs.ext4 /dev/sda1
+    mkswap /dev/sda2
+    swapon /dev/sda2
+fi
+
 
 # for lvm
 pvcreate /dev/sda3
@@ -106,13 +151,21 @@ Y|y)
     mkfs.ext4 /dev/arch_vg00/lv_home
     ;;
 n|N)
-    echo ""
-    echo "Warning: didn't create home"
-    exit
+    read -p "how many you separate for root? size{M,G}: " home
+    lvcreate -L $home -n lv_home arch_vg00
+    mkfs.ext4 /dev/arch_vg00/lv_home
     ;;
 *)
-    lvcreate -l 100%FREE -n lv_home arch_vg00
-    mkfs.ext4 /dev/arch_vg00/lv_home
+    echo ""
+    read -p "No separated space for home! really? " recr
+        case "$recr" in
+        Y|y)
+            echo ""
+            ;;
+        *)
+            mkfilesys
+            ;;
+        esac
     ;;
 esac
 
@@ -134,16 +187,18 @@ do
     fi
 done
 
-pacstrap /mnt base
+pacstrap /mnt base base-devel
 
-genfstab -p /mnt >> /mnt/etc/fstab
+genfstab -U /mnt >> /mnt/etc/fstab
 
 
-cp /run/archiso/bootmnt/archlinux_ins2.sh /mnt
-cp -r /run/archiso/bootmnt/configs /mnt/home
+[[ -e /run/archiso/bootmnt/archlinux_ins2.sh ]] &&
+    cp /run/archiso/bootmnt/archlinux_ins2.sh /mnt
+[[ -d /run/archiso/bootmnt/configs ]] &&
+    cp -r /run/archiso/bootmnt/configs /mnt/home
 
 # Run the second step
-arch-chroot /mnt /bin/bash archlinux_ins2.sh $hnm
+arch-chroot /mnt /bin/bash archlinux_ins2.sh $chty $hnm
 
 
 # get log
@@ -151,5 +206,5 @@ mv /root/install_archlinux.log /mnt/root
 
 
 # exit from archlinux_ins2.sh, reboot to new system
-umount -lR /mnt
+umount -R /mnt
 reboot
