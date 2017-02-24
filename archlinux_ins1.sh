@@ -151,7 +151,7 @@ Y|y)
     mkfs.ext4 /dev/arch_vg00/lv_home
     ;;
 n|N)
-    read -p "how many you separate for root? size{M,G}: " home
+    read -p "how many you separate for home? size{M,G}: " home
     lvcreate -L $home -n lv_home arch_vg00
     mkfs.ext4 /dev/arch_vg00/lv_home
     ;;
@@ -198,11 +198,7 @@ genfstab -U /mnt >> /mnt/etc/fstab
     cp -r /run/archiso/bootmnt/configs /mnt/home
 
 # Run the second step
-<<<<<<< HEAD
-arch-chroot /mnt /bin/bash archlinux_ins2.sh $chty $hnm
-=======
 arch-chroot /mnt /bin/bash archlinux_ins2.sh $hnm $chty
->>>>>>> hotfix/v0.1.1
 
 
 # get log
