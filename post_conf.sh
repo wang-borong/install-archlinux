@@ -12,10 +12,10 @@ then
     pacman -S fcitx-im fcitx-configtool fcitx-googlepinyin
 
     echo '
-    [archlinuxfr]
-    SigLevel = Optional TrustAll
-    Server = http://repo.archlinux.fr/$arch
-    ' >> /etc/pacman.conf
+[archlinuxfr]
+SigLevel = Optional TrustAll
+Server = http://repo.archlinux.fr/$arch
+' >> /etc/pacman.conf
 
     pacman -S yaourt
 
