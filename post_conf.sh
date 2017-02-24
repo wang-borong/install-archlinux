@@ -22,8 +22,11 @@ Server = http://repo.archlinux.fr/$arch
 
     systemctl start slim
     systemctl enable slim
+
+    echo "exec startxfce4" > /home/wbr/.xinitrc
+    chown wbr:wbr /home/wbr/.xinitrc
+
 else
-    echo "exec startxfce4" > ~/.xinitrc
 
     read -p "what is  your compressed configuration: " pcc
     mkdir -p ~/tmp
