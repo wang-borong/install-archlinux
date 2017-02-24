@@ -28,6 +28,6 @@ else
     read -p "what is  your compressed configuration: " pcc
     mkdir -p ~/tmp
     [[ -n "$pcc" ]] && tar -xf $pcc -C ~/tmp || echo "no configuration"
-    (cd ~/tmp/$(ls) && mv .* ~)
+    (cd ~/tmp/$(ls) && mv .* ~ && mv * ~)
     rm -rf ~/tmp
 fi
