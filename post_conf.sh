@@ -1,10 +1,5 @@
 #!/bin/bash
 
-if [[ $(ping archlinux.org) != 0 ]]; then
-    echo "Set up network e.g. ip link set eth0 up"
-    echo "Create dhcpd service e.g. systemctl enable dhcpd && systemctl start dhcpd"
-fi
-
 if [[ $UID == 0 ]]
 then
     chown -R wbr:wbr /home/configs
