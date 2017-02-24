@@ -104,8 +104,8 @@ echo "Server = http://mirrors.zju.edu.cn/archlinux/\$repo/os/\$arch" > /etc/pacm
 
 # Start to install!
 echo "start to install archlinux"
-# wait 2 seconds
-sleep 2
+# wait 1 seconds
+sleep 1
 read -p "which type you need to install? mbr or efi? " chty
 read -p "input hostname: " hnm
 
