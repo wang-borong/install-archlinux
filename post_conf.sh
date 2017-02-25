@@ -48,11 +48,4 @@ Server = http://repo.archlinux.fr/$arch
     systemctl start slim
     systemctl enable slim
 
-else
-
-    read -p "what is  your compressed configuration: " pcc
-    mkdir -p ~/tmp
-    [[ -n "$pcc" ]] && tar -xpf $pcc -C ~/tmp || echo "no configuration"
-    (cd ~/tmp/$(ls) && mv .* ~ && mv * ~)
-    rm -rf ~/tmp
 fi
