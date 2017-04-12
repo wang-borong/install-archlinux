@@ -1,12 +1,11 @@
-# archlinux_install
-scripts for installing archlinux, just for convenient.
+### archlinux_install
+These scripts are used for installing archlinux.
 
-## usage
-1. Put archlinux_ins1.sh, archlinux_ins2.sh and archlinux_install.sh in
-root of archlinux bootable CDROM.
+#### usage
+1. bootup from your u-disk
 
-2. Put your configurations and post_conf.sh in configs of CDROM.
+2. git clone https://github.com/stuha/install-archlinux.git
 
-3. /run/archiso/bootmnt/archlinux_install.sh.
+3. cd install-archlinux && ./archlinux_install.sh
 
-4. Use post_conf.sh to finish installing X window(Xfce4).
+4. optionally, run post_conf.sh to install X window environment(Xfce4).
