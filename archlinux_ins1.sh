@@ -178,11 +178,11 @@ mount /dev/arch_vg00/lv_root /mnt
 mkdir /mnt/boot
 mount /dev/sda1 /mnt/boot
 
-SMTFS=`ls /dev/arch_vg00/lv_* | sed "s/\/dev\/arch_vg00\///"`
+SMTFS=$(ls /dev/arch_vg00/lv_* | sed "s/\/dev\/arch_vg00\///")
 for mfs in $SMTFS
 do
     if [[ $mfs != "lv_root" ]]; then
-        fs=`echo $mfs | sed "s/lv_//"`
+        fs=$(echo $mfs | sed "s/lv_//")
         mkdir /mnt/$fs
         mount /dev/arch_vg00/$mfs /mnt/$fs
     fi
