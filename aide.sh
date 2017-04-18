@@ -4,7 +4,7 @@
 # Change mirror list (chroot stage). We always want to download package as far as possible.
 # For safeness, back it up.
 mv /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bak
-echo 'Server = http://mirrors.zju.edu.cn/archlinux/\$repo/os/\$arch' > /etc/pacman.d/mirrorlist
+echo 'Server = http://mirrors.zju.edu.cn/archlinux/$repo/os/$arch' > /etc/pacman.d/mirrorlist
 
 # Sorry, for chinese only now.
 echo $1 > /etc/hostname
