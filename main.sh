@@ -1,19 +1,33 @@
 ## Install archlinux with lvm
 
-#: You should make partition and formatting before using this script.
-#: The method:
-#:   partition:
-#:     gdisk /dev/sdx  (lvm - 8e00, ufi - ef00, swap - 8200, etc.)
-#:     !!make a gpt first by option o
-#:   formatting:
-#:     mkfs.ext4 /dev/sdxn
-#:   lvm:
-#:     pvcreate /dev/sdxn
-#:     vgcreate vg00 /dev/sdxn
-#:     lvcreate -L size(G,M) -n name vg00
-#:   lvm expansion:
-#:     lvextend -L +size vg00/home /dev/sdxn  -  Extend the size of an LV by size, using a specific PV.
-#:   man lvextend, vgextend to read the detail
+read -p "have you made partitions and mount them? " yn
+if [[ $yn == "n" ]]; then
+    echo "
+You should make partitions and formatting them before using this script.
+The method:
+  make partitions:
+    gdisk /dev/sdx  (lvm - 8e00, ufi - ef00, swap - 8200, etc.)
+    !!make a gpt first by option o
+  formatting them:
+    mkfs.ext4 /dev/sdxn
+  make lvm:
+    pvcreate /dev/sdxn
+    vgcreate vg00 /dev/sdxn
+    lvcreate -L size(G,M) -n name vg00
+  lvm expansion:
+    lvextend -L +size vg00/home /dev/sdxn  -  Extend the size of an LV by size, using a specific PV.
+  man lvextend, vgextend to read the details
+
+Then, you should mount them, e.p.:
+  mount /dev/sda2 /mnt
+  mkdir -p /mnt/boot
+  mount /dev/sda1 /mnt/boot
+  ...
+    "
+    exit 1
+else
+    echo "Okay, let's go."
+fi
 
 # change mirror list, installation stage
 mv /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bak
