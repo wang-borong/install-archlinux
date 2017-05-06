@@ -5,7 +5,11 @@
 # all the scripts should be put in a same directory
 bash ./main.sh | tee /root/install_archlinux.log
 
-echo ""
-echo "Congratulations!"
-echo "archiso : log is dumped in /root/install.log"
-echo ""
+if [[ $? > 0 ]]; then
+    exit 1
+else
+    echo ""
+    echo "Congratulations!"
+    echo "archiso : log is dumped in /root/install.log"
+    echo ""
+fi
