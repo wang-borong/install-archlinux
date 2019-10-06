@@ -11,12 +11,12 @@ Server = https://mirrors.ustc.edu.cn/archlinuxcn/$arch
 ' >> /etc/pacman.conf
 
     # Xface environment and ...
-    pacman -Sy --confirm xorg xfce4 xfce4-goodies slim archlinux-themes-slim \
+    pacman -Sy --noconfirm xorg xfce4 xfce4-goodies slim archlinux-themes-slim \
         slim-themes
     # lxqt...
 
     # programs
-    pacman -S --confirm sudo fcitx-im fcitx-configtool fcitx-googlepinyin \
+    pacman -S --noconfirm sudo fcitx-im fcitx-configtool fcitx-googlepinyin \
         ttf-dejavu wqy-zenhei wqy-microhei yay firefox
 
     read -p "If use virtualbox, please input y! " vbox
