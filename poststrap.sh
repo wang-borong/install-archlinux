@@ -24,7 +24,7 @@ mkinitcpio -p linux
 # mkinitcpio -p linux-custom
 
 # perhaps... The efi mode is the mainstream of the future.
-echo "y" | pacman -S grub-efi-x86_64 efibootmgr
+pacman -S --confirm grub-efi-x86_64 efibootmgr
 grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=grub
 grub-mkconfig -o /boot/grub/grub.cfg
 
@@ -51,7 +51,7 @@ passwd
 systemctl enable dhcpcd && systemctl start dhcpcd
 
 # My favorite
-yes " " | pacman -S zsh wget git gvim
+pacman -S --confirm zsh wget git gvim
 
 # Everyone should not use root, so create a user soon.
 # Creat group and user ($2)

@@ -8,9 +8,9 @@ These scripts are used for installing archlinux.
 
 3. make partitions and formatting, then mount them.
 
-4. cd \*install-archlinux\* && ./go.sh
+4. cd \*install-archlinux\* && ./install_arch.sh
 
-5. optionally, run xenv.sh to install X window environment(Xfce4).
+5. optionally, run xstrap.sh to install X window environment(Xfce4).
 
 #### useful tips
 You can use [aui](https://github.com/helmuthdu/aui)(advanced) to install archlinux.

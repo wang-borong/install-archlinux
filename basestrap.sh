@@ -53,9 +53,9 @@ pacstrap /mnt base base-devel
 genfstab -U /mnt >> /mnt/etc/fstab
 
 # Run the second step. We can not do next step in this script. The environment will change(chroot). But we can use another script to do the next.
-cp aide.sh /mnt  # copy it to new environment
-arch-chroot /mnt /bin/bash aide.sh $host_name $user_name  # and execute
-rm -f /mnt/aide.sh
+cp poststrap.sh /mnt  # copy it to new environment
+arch-chroot /mnt /bin/bash poststrap.sh $host_name $user_name  # and execute
+rm -f /mnt/poststrap.sh
 
 # exit from next step, reboot to new system
 umount -R /mnt
